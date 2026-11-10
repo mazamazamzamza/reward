@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: snap-reward
+    runtime: python
+    buildCommand: ""
+    startCommand: python server.py
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: DISCORD_TOKEN
+        sync: false
+      - key: DISCORD_CHANNEL_ID
+        sync: false
+      - key: DISCORD_PUBLIC_KEY
+        sync: false
+      - key: DISCORD_APPLICATION_ID
+        sync: false
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: TELEGRAM_CHAT_ID
+        sync: false

