@@ -1,21 +1,14 @@
 services:
   - type: web
-    name: snap-reward
-    runtime: python
-    buildCommand: ""
-    startCommand: python server.py
+    name: reward-telegram-bot
+    env: python
+    plan: starter  # recommandé (le plan gratuit met le service en veille après 15 min)
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python server.py"
     envVars:
-      - key: PORT
-        value: 10000
-      - key: DISCORD_TOKEN
-        sync: false
-      - key: DISCORD_CHANNEL_ID
-        sync: false
-      - key: DISCORD_PUBLIC_KEY
-        sync: false
-      - key: DISCORD_APPLICATION_ID
-        sync: false
       - key: TELEGRAM_BOT_TOKEN
         sync: false
-      - key: TELEGRAM_CHAT_ID
+      - key: TELEGRAM_ADMIN_CHAT_ID
         sync: false
+      - key: PORT
+        value: 10000
